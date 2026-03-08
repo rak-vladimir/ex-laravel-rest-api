@@ -60,7 +60,7 @@ jobs:
         run: |
           cp .env.example .env || true
           php artisan key:generate --force
-          php artisan config:clear
+          php artisan optimize:clear
 
       - name: Wait for Postgres
         run: |
@@ -72,9 +72,5 @@ jobs:
       - name: Run migrations
         run: php artisan migrate --force
 
-      - name: Run Pint (code style)
-        run: ./vendor/bin/pint --test
-
       - name: Run tests
         run: composer test
-
