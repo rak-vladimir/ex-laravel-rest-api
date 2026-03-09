@@ -51,3 +51,69 @@ Examples of frequently used commands:
 * make logs — view logs;
 * make shell — open a shell in the application container;
 * make artisan migrate — run migrations.
+
+## Аутентификация
+
+Проект использует **Laravel Sanctum** для аутентификации через **Bearer-токены** (Personal Access Tokens).
+Это позволяет защищать API-роуты и работать с приложениями, мобильными клиентами или Postman.
+
+### Эндпоинты аутентификации
+
+- **POST /api/register** — регистрация нового пользователя  
+  Тело запроса:
+  ```json
+  {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "password_confirmation": "password123"
+  }
+  ```
+  Ответ (201 Created):
+  ```json
+  {
+  "user": { ... },
+  "token": "1|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  }
+  ```
+
+- **POST /api/login** — вход пользователя  
+  Тело запроса:
+  ```json
+    {
+    "email": "john@example.com",
+    "password": "password123"
+    }
+  ```
+  Ответ:
+  ```json
+  {
+  "user": { ... },
+  "token": "1|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  }
+  ```
+
+- **POST /api/logout** — выход (удаление текущего токена)
+  Требует заголовка:
+
+  `Authorization: Bearer <ваш_токен>`
+
+  Ответ (200):
+  ```json
+  { "message": "Logged out" }
+  ```
+
+- **GET /api/user** — получение информации о текущем пользователе
+  Требует заголовка:
+
+  `Authorization: Bearer <ваш_токен>`
+
+  Ответ (200):
+  ```json
+    {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com",
+    ...
+    }
+  ```
