@@ -52,15 +52,15 @@ Examples of frequently used commands:
 * make shell — open a shell in the application container;
 * make artisan migrate — run migrations.
 
-## Аутентификация
+## Authentication
 
-Проект использует **Laravel Sanctum** для аутентификации через **Bearer-токены** (Personal Access Tokens).
-Это позволяет защищать API-роуты и работать с приложениями, мобильными клиентами или Postman.
+The project uses **Laravel Sanctum** for authentication via **Bearer tokens** (Personal Access Tokens).
+This allows protecting API routes and working with applications, mobile clients, or Postman.
 
-### Эндпоинты аутентификации
+### Authentication Endpoints
 
-- **POST /api/register** — регистрация нового пользователя  
-  Тело запроса:
+- **POST /api/register** — register a new user
+  Request body:
   ```json
   {
     "name": "John Doe",
@@ -69,7 +69,7 @@ Examples of frequently used commands:
     "password_confirmation": "password123"
   }
   ```
-  Ответ (201 Created):
+  Response (201 Created):
   ```json
   {
   "user": { ... },
@@ -77,15 +77,15 @@ Examples of frequently used commands:
   }
   ```
 
-- **POST /api/login** — вход пользователя  
-  Тело запроса:
+- **POST /api/login** — user login
+  Request body:
   ```json
     {
     "email": "john@example.com",
     "password": "password123"
     }
   ```
-  Ответ:
+  Response:
   ```json
   {
   "user": { ... },
@@ -93,22 +93,22 @@ Examples of frequently used commands:
   }
   ```
 
-- **POST /api/logout** — выход (удаление текущего токена)
-  Требует заголовка:
+- **POST /api/logout** — logout (revoke current token)
+  Requires header:
 
-  `Authorization: Bearer <ваш_токен>`
+  `Authorization: Bearer <your_token>`
 
-  Ответ (200):
+  Response (200):
   ```json
   { "message": "Logged out" }
   ```
 
-- **GET /api/user** — получение информации о текущем пользователе
-  Требует заголовка:
+- **GET /api/user** — get current user information
+  Requires header:
 
-  `Authorization: Bearer <ваш_токен>`
+  `Authorization: Bearer <your_token>`
 
-  Ответ (200):
+  Response (200):
   ```json
     {
     "id": 1,
