@@ -7,16 +7,18 @@ use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int                             $id
- * @property int                             $user_id
- * @property string                          $title
- * @property string                          $content
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int                                                             $id
+ * @property int                                                             $user_id
+ * @property string                                                          $title
+ * @property string                                                          $content
+ * @property \Illuminate\Support\Carbon|null                                 $created_at
+ * @property \Illuminate\Support\Carbon|null                                 $updated_at
  *
- * @property-read \App\Models\User           $user
+ * @property-read \App\Models\User                                           $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<\App\Models\Post> $comments
  */
 #[UsePolicy(PostPolicy::class)]
 class Post extends Model
@@ -29,5 +31,10 @@ class Post extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

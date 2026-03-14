@@ -45,11 +45,10 @@ class PostController extends Controller
     public function store(PostRequest $request): JsonResponse
     {
         /** @var Post $post */
-        $post = $this->crud
-            ->create([
-                ...$request->validated(),
-                'user_id' => $request->user()->id,
-            ]);
+        $post = $this->crud->create([
+            ...$request->validated(),
+            'user_id' => $request->user()->id,
+        ]);
 
         return $post
             ->toResource()
@@ -62,9 +61,9 @@ class PostController extends Controller
      */
     public function show(Post $post): JsonResource
     {
-        return new PostResource(
-            $post->load('user')
-        );
+        return $post
+            ->load('user')
+            ->toResource();
     }
 
     /**
